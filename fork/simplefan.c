@@ -10,7 +10,9 @@ int main (int argc, char *argv[] ) {
 		fprintf(stderr, "Usage: %s processes\n", argv[0]);
 		return 1;
 	}
+	
 	n = atoi(argv[1]);
+	
 	for (i = 1; i < n; i++) 
 		if ((childpid = fork()) <= 0 )
 			break;
@@ -19,4 +21,3 @@ int main (int argc, char *argv[] ) {
 	return 0;
 
 }
-

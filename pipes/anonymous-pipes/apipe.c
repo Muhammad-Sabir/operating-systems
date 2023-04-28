@@ -1,7 +1,3 @@
-pipe.c
-exels.c
-redirect.c
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -32,7 +28,6 @@ int main(int argc, char *argv[]) {
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
 	close(fd[0]);
-	execl("usr/bin/grep", "grep", "x", NULL);
-	
-	return 0;
+	execl("usr/bin/grep", "grep", "a", NULL);
+
 }

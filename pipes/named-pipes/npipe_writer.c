@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
 	char buffer[BUFFER_SIZE + 1];
 
 	printf("Process %d going to open %s for writing\n", getpid(), argv[1]);
+	
 	if ((pipe_fd = open (argv[1], O_WRONLY)) == -1) {
 		perror ("Unable to open pipe");
 		return 1;
