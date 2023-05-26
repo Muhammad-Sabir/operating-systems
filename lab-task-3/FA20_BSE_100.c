@@ -38,18 +38,19 @@ int main(void) {
 	
 	sem_id = semget(SEMKEY, 5, (IPC_CREAT | IPC_EXCL | 0666));
 
-	if (sem_id < 0)
+	if (sem_id < 0) {
 		perror("Cannot create semaphore.\n");
-	else {
-		for (int i = 0; i < 5; i++)
-		    csticks[i] = 1;
+		exit(1);
+	}	
 
-		arg.array = csticks;
+	for (int i = 0; i < 5; i++)
+	    csticks[i] = 1;
 
-		if (semctl(sem_id, 0, SETALL, arg) == -1) {
-		    perror("semctl");
-		    exit(1);
-		}
+	arg.array = csticks;
+
+	if (semctl(sem_id, 0, SETALL, arg) == -1) {
+	    perror("semctl");
+	    exit(1);
 	}
 
 	pthread_create(&pid[PHILOSOPHER_ONE], NULL, philosopherDining, (void*)PHILOSOPHER_ONE);
@@ -70,22 +71,13 @@ int main(void) {
 void* philosopherDining(void* pNo) {
 	intptr_t philosopherNo = (intptr_t)pNo;
 	
-		union semun arg;
-			unsigned short csticks[5];
-			arg.array = csticks;
+	int right_stick = philosopherNo;
+	int left_stick = (philosopherNo + 1) % 5; 
 
 	while(1) {
 		waitRandomTime(0.1, 5.0);
 
 		printf("Philosopher %ld wants to eat. \n\n", ((long)philosopherNo + 1));
-		
-		if (semctl(sem_id, 0, GETALL, arg) == -1) {
-		    perror("semctl");
-		    exit(1);
-		}
-		
-		int right_stick = philosopherNo;
-		int left_stick = (philosopherNo + 1) % 5; 
 		
 		sops[right_stick].sem_num = right_stick;
 		sops[right_stick].sem_op = -1;
@@ -96,7 +88,7 @@ void* philosopherDining(void* pNo) {
 		sops[left_stick].sem_flg = 0;
 		
 		if(semop(sem_id, &sops[philosopherNo], 2) < 0) {
-			perror("Semop error");
+			perror("Semop error! \n");
 			exit(1);
 		}
 			
@@ -108,7 +100,7 @@ void* philosopherDining(void* pNo) {
 		sops[left_stick].sem_op = 1;
 		
 		if(semop(sem_id, &sops[philosopherNo], 2) < 0) {
-			perror("Semop error");
+			perror("Semop error! \n");
 			exit(1);
 		}
 		
