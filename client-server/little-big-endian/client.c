@@ -15,14 +15,14 @@ void error(const char *msg) {
 // ss dst 127.0.0.1 -p (to view connections)
 // ps -aux | grep server2
 int main(int argc, char *argv[]) {
-	int sockfd, portno, n, term_con = 0;
+	int sockfd, portno, n;
 	short s1;
 
 	struct sockaddr_in serv_addr, cli_addr;
 	struct hostent *server;
 	
 	if(argc < 3) {
-		fprintf(stderr, "Usage %s hostname port. \n", argv[0]);
+		fprintf(stderr, "Usage: '%s hostname port'. \n", argv[0]);
 		exit(0);
 	}
 	
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 		error("Error while connecting.");
 	}
 	
-	s1 = 250;
+	s1 = 25;
 	s1 = htons(s1);
 	
 	if((n = write(sockfd, &s1, sizeof(short))) < 0) {

@@ -58,10 +58,7 @@ int main(int argc, char *argv[]) {
 	s1 = ntohs(s1);
 	printf("Received (from client - Little Endian): %d \n", s1);
 	
-	s1 += 500;
-	printf("\n\n %d \n\n", s1);
-	s1 = htons(s1);
-	printf("\n\n %d \n\n", s1);
+	s1 += 5;
 	
 	if((n = write(newsockfd, &s1, sizeof(short))) < 0) {
 		error("Error while writing to socket.");
