@@ -1,4 +1,1 @@
-a.out
-apipe2.c
-apipe.c
-a.txt
+      6       6      40

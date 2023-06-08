@@ -29,5 +29,4 @@ int main(int argc, char *argv[]) {
 	close(fd[1]);
 	close(fd[0]);
 	execl("usr/bin/grep", "grep", "a", NULL);
-
 }

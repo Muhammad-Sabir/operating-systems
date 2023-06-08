@@ -15,14 +15,17 @@ int main(int argc, char *argv[]) {
 
 	printf("Process %d going to open %s for writing\n", getpid(), argv[1]);
 	
-	if ((pipe_fd = open (argv[1], O_WRONLY)) == -1) {
-		perror ("Unable to open pipe");
+	if ((pipe_fd = open(argv[1], O_WRONLY)) == -1) {
+		perror ("Unable to open pipe. \n");
 		return 1;
 	}
-	sprintf (buffer, "Process %d says AoA", getpid());
+	
+	sprintf (buffer, "Writer process %d says Salam :) \n", getpid());
+	
 	if ((res = write (pipe_fd, buffer, BUFFER_SIZE)) == -1) {
-		perror ("Unable to write to pipe");
+		perror ("Unable to write to pipe. \n");
 	}
+	
 	close (pipe_fd);
 }
 
